@@ -7,9 +7,11 @@ $(document).on('ready', function() {
     $('form').on('submit', function(e) {
         e.preventDefault();
         var $movieTitle = $('#movieTitle').val();
+        var $type = $('#resultType').val();
+        console.log($type);
         console.log($movieTitle)
         $.ajax({
-            url: 'http://www.omdbapi.com/?s=' + $movieTitle,
+            url: 'http://www.omdbapi.com/?s=' + $movieTitle + '&type=' + $type,
             type: 'GET',
             success : function(data) {
                 var movies = [];
@@ -27,10 +29,13 @@ $(document).on('ready', function() {
 
 function appendResults (arr) {
     $('#searchResults').empty()
-    arr.forEach(function(el) {
+    arr.forEach(function(el, ind) {
+        console.log(ind);
         $('#searchResults').append(
-            '<p>' + el.Title + '</p>' +
-            '<img src="' + el.Poster + '" class="twelve columns">' + '<br>'
+            '<div class="col-xs-4 card">' +
+            '<h4>' + el.Title + '</h4>' +
+            '<img src="' + el.Poster + '" class="col-xs-12">' + '<br>'
+            + '</div>'
             )
     })
 }
